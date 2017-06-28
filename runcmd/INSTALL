@@ -1,0 +1,21 @@
+Ubuntu
+	
+Instação do Git
+	sudo apt-get install git
+
+Para copiar o repositório execute
+
+	git clone https://github.com/SO-II-2017/shellgas
+	
+obs: Percebe que será automaticamente criado uma pasta com o nome do repositório
+para a pasta local Home
+ 
+Se você já tiver instalado execute os comando após estar dentro da pasta do repositório
+  $ make clean
+  $ make uninstall
+  
+ Para compilar todos os arquivos da pasta execute:
+  $ make 
+  
+  
+ 

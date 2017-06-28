@@ -1,0 +1,13 @@
+ Clone the repository https://github.com/SOII-2016/sevensh
+ 
+ if you have already run the make, run the following commands to clear the previous builds:
+  $ make clean
+  $ make uninstall
+  
+  to compile all the files, run make:
+  $ make 
+  
+ to run the tests, enter:
+  $ make test
+  
+ 
