@@ -1,19 +1,15 @@
-/* main.c
+/*Copyright (c) 2017,
 
-   Copyright (c) 2017,
-
-	Guilherme Rodrigues
-	Ilgner Lino Vieira
-	ilgnerlv@gmail.com
-	Lucas Françozo Bataglia		
-	lukao350@gmail.com
-	Luciano Gabriel Francisco 
-	lucianogfl1@gmail.com
-
-   This file is part of shellgas project.
-
+	Guilherme Rodrigues 	     guilhermerodrigues10@gmail.com
+	Ilgner Lino Vieira           ilgner_lv@hotmail.com
+	Lucas Françoso Bataglia      lukao350@gmail.com
+ 	Luciano Gabriel Francisco    lucianofl1@gmail.com
+ 
+   This file is part of Shellgas project.
+    
    Shellgas is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -24,7 +20,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
+   ================================================================================
+   Shellgas source code may be obtained from (https://github.com/SO-II-2017/shellgas/)*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,7 +36,7 @@
 #include "debug.h"
 
 #define MAX_SIZE 1024
-#define PROMPT "Shellgas$ "
+#define PROMPT "shellgas$ "
 
 /* Structs */
 
@@ -68,7 +65,6 @@ void childHandler(int sig); /*common child handler*/
 void childHandlerCtrlC(int sig);
 void childHandlerCtrlZ(int sig);
 void childHandlerEnd(int sig);
-
 int spawn_proc(int in, int out, struct command *cmd); /*functions to spawn processes [pipes]*/
 int fork_pipes(int n, struct command *cmd, pipeline_t *currentPipeline);
 
@@ -93,10 +89,13 @@ int main (int argc, char **argv)
     /* This is the main loop */
     while (go_on)
     {
-        char cwd[1024];
+        char diretorio[3000];
 
-        //printf ("%s %s$ ", getcwd(cwd, sizeof(cwd)), getlogin());
-	printf("%s", PROMPT);
+    printf("%s", PROMPT);
+    
+    if (getcwd(diretorio, sizeof(diretorio)) != NULL) 
+         
+        printf("/%s$ ", diretorio); 
         fflush(stdout);
         fflush(stdin);
 
@@ -163,7 +162,6 @@ int external_pipes_commands(pipeline_t *currentCommand) {
     int j;
     for (j = 0; j < currentCommand->ncommands; j++) {
         char **command_line = malloc(sizeof(char) * currentCommand->narguments[j] * 10);
-        
         /*organize command line array*/
         int i;
 		//put each argument in a vector, or makes a parse all arguments
@@ -194,7 +192,6 @@ int external_pipes_commands(pipeline_t *currentCommand) {
  function that loads and executes a new child process. 
  The current process may wait for the child to terminate or may continue to execute asynchronously. 
  Creating a new subprocess requires enough memory in which both the child process and the current program can execute.
-
 */
 
 int spawn_proc(int in, int out, struct command *cmd)
@@ -238,7 +235,6 @@ int fork_pipes (int n, struct command *cmd, pipeline_t *currentPipeline)
         pipe (fd);
         
         /* f [1] is the write end of the pipe*/
-        
         spawn_proc (in, fd [1], cmd + i);
         
         /*the child will write here.  */
@@ -259,6 +255,7 @@ int fork_pipes (int n, struct command *cmd, pipeline_t *currentPipeline)
         dup2(fdopen, STDOUT_FILENO);   /* make stdout go to file*/
         dup2(fdopen, STDERR_FILENO); 
         close(fdopen);
+        
     }
     else if (REDIRECT_STDIN(currentPipeline)) 
     {
@@ -323,6 +320,7 @@ int fork_pipes (int n, struct command *cmd, pipeline_t *currentPipeline)
     For example, when using the "cd" command, no process is created. The current directory simply gets changed on executing it.
 	fonte: http://www.theunixschool.com/2012/03/internal-vs-external-commands.html
 */
+
 int internal_commands(pipeline_t *internalPipeline) {
     /*sanity test*/
     if (internalPipeline->narguments[0] > 0) {
@@ -727,7 +725,6 @@ void childHandler(int sig) {
         }
     }
 }
-
 
 /* Delete Node Function */
 
